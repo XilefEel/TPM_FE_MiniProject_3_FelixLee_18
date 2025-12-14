@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Fumart</title>
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="brand">
+        <h1 class="brand-title">Fumart</h1>
+        <p class="brand-subtitle">for seller</p>
+      </div>
+      <div class="user-profile"></div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="nav-group">
+          <div class="nav-link">
+            <img src="assets/layout-dashboard.svg" class="nav-icon" />
+            <div>Dashboard</div>
+          </div>
+          <div class="nav-link active">
+            <img src="assets/archive.svg" class="nav-icon active" />
+            <div>Products</div>
+          </div>
+          <div class="nav-link">
+            <img src="assets/receipt-text.svg" class="nav-icon" />
+            <div>Orders</div>
+          </div>
+          <div class="nav-link">
+            <img src="assets/settings.svg" class="nav-icon" />
+            <div>Settings</div>
+          </div>
+        </nav>
+        <nav class="nav-group">
+          <div class="nav-link">
+            <img src="assets/circle-question-mark.svg" class="nav-icon" />
+            <div>Help</div>
+          </div>
+          <div class="nav-link">
+            <img src="assets/message-square-warning.svg" class="nav-icon" />
+            <div>Feedback</div>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="page-header">
+          <h1 class="page-title">Products</h1>
+          <button class="btn-primary">+ Add Product</button>
+        </header>
+
+        <section class="products-grid"></section>
+
+        <section class="form-container">
+          <div class="add-product-modal" style="display: none">
+            <form class="product-form">
+              <div class="form-row">
+                <div class="form-labels">
+                  <label class="form-label">Product Name:</label>
+                  <label class="form-label">Product Category:</label>
+                  <label class="form-label">Price:</label>
+                  <label class="form-label">Desc:</label>
+                </div>
+                <div class="form-inputs">
+                  <input type="text" class="text-input" />
+                  <input type="text" class="text-input" />
+                  <input type="text" class="text-input" />
+                  <input type="text" class="text-input" />
+                </div>
+              </div>
+              <div class="file-upload">
+                <label class="form-label">Photo:</label>
+                <input type="file" class="file-input" />
+              </div>
+            </form>
+
+            <hr class="divider" />
+
+            <div class="form-actions">
+              <button class="btn-primary">Add Product</button>
+            </div>
+          </div>
+
+          <div class="edit-product-modal" style="display: none">
+            <form class="product-form">
+              <div class="form-row">
+                <div class="form-labels">
+                  <label class="form-label">Product Name:</label>
+                  <label class="form-label">Product Category:</label>
+                  <label class="form-label">Price:</label>
+                  <label class="form-label">Desc:</label>
+                </div>
+                <div class="form-inputs">
+                  <input type="text" class="text-input" />
+                  <input type="text" class="text-input" />
+                  <input type="text" class="text-input" />
+                  <input type="text" class="text-input" />
+                </div>
+              </div>
+              <div class="file-upload">
+                <label class="form-label">Photo:</label>
+                <input type="file" class="file-input" />
+              </div>
+            </form>
+
+            <hr class="divider" />
+
+            <div class="form-actions">
+              <button class="btn-primary">Update Product</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
