@@ -1,3 +1,4 @@
+// API Functions
 async function createProduct(productData) {
   return fetch("https://fakestoreapi.com/products", {
     method: "POST",
@@ -24,6 +25,7 @@ async function getAllProducts() {
   return fetch("https://fakestoreapi.com/products").then((res) => res.json());
 }
 
+// UI Logic
 const productsGrid = document.querySelector(".products-grid");
 const addProductModal = document.querySelector(".add-product-modal");
 const editProductModal = document.querySelector(".edit-product-modal");
@@ -53,6 +55,10 @@ function showAddPage() {
   addButton.style.display = "none";
   pageTitle.textContent = "Add Product";
   addProductModal.style.display = "flex";
+
+  const inputs = addProductModal.querySelectorAll(".text-input");
+  inputs.forEach((input) => (input.value = ""));
+  addProductModal.querySelector(".file-input").value = "";
 }
 
 function showEditPage(productId) {
@@ -65,11 +71,15 @@ function showEditPage(productId) {
 
 function getFormData(modal) {
   const inputs = modal.querySelectorAll(".text-input");
+  const fileInput = modal.querySelector(".file-input");
+  const file = fileInput.files[0];
+
   return {
     title: inputs[0].value.trim(),
     category: inputs[1].value.trim(),
     price: inputs[2].value.trim(),
     description: inputs[3].value.trim(),
+    image: file ? URL.createObjectURL(file) : null,
   };
 }
 
@@ -85,6 +95,18 @@ function validateForm(data) {
   return true;
 }
 
+function addProductCard(product) {
+  const card = createProductCard(product);
+  productsGrid.appendChild(card);
+}
+
+function updateProductCard(product) {
+  const oldCard = document.querySelector(`[data-product-id="${product.id}"]`);
+  const newCard = createProductCard(product);
+  oldCard.replaceWith(newCard);
+}
+
+// Event Listeners
 addButton.addEventListener("click", showAddPage);
 
 addSubmitButton.addEventListener("click", async (e) => {
@@ -98,9 +120,11 @@ addSubmitButton.addEventListener("click", async (e) => {
     category: data.category,
     price: parseFloat(data.price),
     description: data.description,
+    image: data.image || "assets/placeholder.png",
   });
 
-  addProduct(newProduct);
+  newProduct.image = data.image || "assets/placeholder.png";
+  addProductCard(newProduct);
   showProductsPage();
 });
 
@@ -115,10 +139,16 @@ editSubmitButton.addEventListener("click", async (e) => {
     category: data.category,
     price: parseFloat(data.price),
     description: data.description,
+    image: data.image || "assets/placeholder.png",
   });
 
   updatedProduct.id = currentEditingProductId;
-  updateProduct(updatedProduct);
+  updatedProduct.image =
+    data.image ||
+    document.querySelector(
+      `[data-product-id="${currentEditingProductId}"] .card-image`
+    ).src;
+  updateProductCard(updatedProduct);
   showProductsPage();
 });
 
@@ -126,6 +156,7 @@ function createProductCard(product) {
   const article = document.createElement("article");
   article.className = "product-card";
   article.dataset.productId = product.id;
+
   article.innerHTML = `
     <header class="card-header">
       <div class="card-title">
@@ -177,18 +208,7 @@ function createProductCard(product) {
   return article;
 }
 
-function addProduct(product) {
-  const card = createProductCard(product);
-  productsGrid.appendChild(card);
-}
-
-function updateProduct(product) {
-  const oldCard = document.querySelector(`[data-product-id="${product.id}"]`);
-  const newCard = createProductCard(product);
-  oldCard.replaceWith(newCard);
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
   const products = await getAllProducts();
-  products.forEach((product) => addProduct(product));
+  products.forEach((product) => addProductCard(product));
 });
